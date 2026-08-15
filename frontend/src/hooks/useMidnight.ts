@@ -128,11 +128,16 @@ export function useMidnight() {
           );
         }
 
-        const selectedEntry = preferredKey
-          ? wallets.find(([key]) => key === preferredKey)
-          : wallets.find(([key, wallet]) =>
-              /lace/i.test(wallet.name) || /lace/i.test(key)
-            ) || wallets[0];
+        const preferredEntry = preferredKey
+  ? wallets.find(([key]) => key === preferredKey)
+  : undefined;
+
+const selectedEntry =
+  preferredEntry ??
+  wallets.find(([key, wallet]) =>
+    /lace/i.test(wallet.name) || /lace/i.test(key)
+  ) ??
+  wallets[0];
 
         if (!selectedEntry) {
           throw new Error('No compatible Midnight wallet was selected.');
