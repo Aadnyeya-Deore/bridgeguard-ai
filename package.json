@@ -1,0 +1,28 @@
+{
+  "name": "bridgeguard-ai",
+  "version": "1.0.0",
+  "description": "Privacy-preserving cross-chain bridge security platform on Midnight Network",
+  "type": "module",
+  "scripts": {
+    "compile": "compact compile contracts/bridgeguard.compact managed/bridgeguard",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "network": "docker compose up -d",
+    "network:down": "docker compose down",
+    "setup": "tsx src/setup.ts",
+    "deploy": "tsx src/deploy.ts",
+    "cli": "tsx src/cli.ts",
+    "frontend:dev": "npm --prefix frontend run dev",
+    "frontend:build": "npm --prefix frontend run build",
+    "frontend:preview": "npm --prefix frontend run preview"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.8"
+  }
+}

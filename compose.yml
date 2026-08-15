@@ -1,0 +1,33 @@
+services:
+  midnight-node:
+    image: ghcr.io/midnightntwrk/midnight-node:latest
+    container_name: bridgeguard-midnight-node
+    ports:
+      - "9944:9944"
+    command: ["--dev", "--rpc-external", "--rpc-cors=all"]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9944/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  midnight-indexer:
+    image: ghcr.io/midnightntwrk/midnight-indexer:latest
+    container_name: bridgeguard-midnight-indexer
+    ports:
+      - "8088:8088"
+    environment:
+      - NODE_RPC_URL=ws://midnight-node:9944
+    depends_on:
+      midnight-node:
+        condition: service_started
+
+  midnight-proof-server:
+    image: ghcr.io/midnightntwrk/midnight-proof-server:latest
+    container_name: bridgeguard-midnight-proof-server
+    ports:
+      - "6300:6300"
+    command: ["--port", "6300", "--host", "0.0.0.0"]
+    depends_on:
+      midnight-node:
+        condition: service_started
